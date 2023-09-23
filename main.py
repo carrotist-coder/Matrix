@@ -1,4 +1,5 @@
 from copy import deepcopy
+
 MIN_NUMBER = -2147483648
 MAX_NUMBER = 2147483647
 options = [
@@ -7,10 +8,11 @@ options = [
 
 
 def get_input(msg, quantity, interval):
+    # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
     condition = False
     while not condition:
         ans = list(input(msg).split())
-        condition = (len(ans) == quantity or quantity == -1)
+        condition = (len(ans) == quantity or quantity == -1)  # -1 means unlimited quantity of the parameters
         try:
             for element in ans:
                 if not (int(element) in interval):
@@ -26,7 +28,7 @@ def get_input(msg, quantity, interval):
             print("Something went wrong...")
 
 
-def init_matrix(lines):
+def init_matrix(lines):  # Initialization the matrix from the keyboard
     matrix = []
     columns = -1
     for i in range(1, lines + 1):
@@ -37,12 +39,12 @@ def init_matrix(lines):
     return matrix, lines, columns
 
 
-def option():
+def option():  # Print all the options and get user's response
     print("Options: \n", options)
     return get_input("Enter: ", 1, range(1, len(options) + 1))
 
 
-def get_matrix():
+def get_matrix(): # Find out the number of lines in the matrix n*m.
     matrix, n, m = init_matrix(get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 99)))
     return matrix, n, m
 
@@ -59,16 +61,16 @@ def det(matrix, n, m):  # Count determinant
         for j in range(0, m):
             element = int(const_matrix[int(0)][int(j)])
             matrix = deepcopy(const_matrix)
-            coefficient = det_coefficient(matrix, n, m, int(0)+1, int(j) + 1)
-            ans += element * int(coefficient) * (-1)**j
+            coefficient = det_coefficient(matrix, n, m, int(0) + 1, int(j) + 1)
+            ans += element * int(coefficient) * (-1) ** j
         return ans
 
 
-def det_coefficient(matrix_accepted, n, m, i, j):  # Count coefficient
+def det_coefficient(matrix_accepted, n, m, i, j):  # Count coefficients (algebraic additions)
     return det(decrease_matrix(matrix_accepted, i - 1, j - 1), n - 1, m - 1)
 
 
-def decrease_matrix(old_matrix, i, j):  # Decrease the matrix in order to count coefficient
+def decrease_matrix(old_matrix, i, j):  # Decrease the matrix an order of magnitude lower in order to count coefficient
     new_matrix = deepcopy(old_matrix)
     for a in range(0, len(old_matrix)):
         del new_matrix[a][int(j)]
