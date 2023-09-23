@@ -1,3 +1,4 @@
+from copy import deepcopy
 MIN_NUMBER = -2147483648
 MAX_NUMBER = 2147483647
 options = [
@@ -47,41 +48,29 @@ def get_matrix():
 
 
 def det(matrix, n, m):  # Count determinant
-    # const_matrix = matrix
-    msg = str()
-    ans = None
     if n != m:
-        msg = "The determinant of the matrix can be found only in a square matrix."
+        print("The determinant of the matrix can be found only in a square matrix.")
+        return None
+    elif n == 1:
+        return int(matrix[0][0])
     else:
-        if len(matrix)==1:
-            return int(matrix[0][0]), n == m, msg
-        else:
-            for i in range(0,n):
-                ans = 0
-            # for i in range(0,n+1):
-            #     coefficient, no_answer, no_msg = det_coefficient(matrix, n,m, 1, int(i)+1)
-            #     print(coefficient)
-            #     # ans += int(matrix[0][int(i)]) * int(coefficient)
-            #     ans += int(coefficient)
-                coefficient, no_answer, no_msg = det_coefficient(matrix, n, m, 1, int(0) + 1)
-                print(coefficient)
-                #ans += int(matrix[0][int(i)]) * int(coefficient)
-        return ans, n == m, msg
+        ans = 0
+        const_matrix = deepcopy(matrix)
+        for i in range(0, n):
+            for j in range(0, m):
+                element = int(const_matrix[int(i)][int(j)])
+                matrix = deepcopy(const_matrix)
+                coefficient = det_coefficient(matrix, n, m, int(i)+1, int(j) + 1)
+                ans += element * int(coefficient)
+        return ans
 
 
-def det_coefficient(matrix_accepted, n, m, i, j): # Count coefficient
-    #if len(matrix)==1:
-    #    return matrix[0][0], 1, 1
-    #else:
-    #    return det(decrease_matrix(matrix, i-1, j-1), i, j)
-    if len(matrix_accepted) == 1:
-        return det(matrix_accepted, i, j)
-    else:
-        return det(decrease_matrix(matrix_accepted, i - 1, j - 1), n-1, m-1)
+def det_coefficient(matrix_accepted, n, m, i, j):  # Count coefficient
+    return det(decrease_matrix(matrix_accepted, i - 1, j - 1), n - 1, m - 1)
 
 
-def decrease_matrix(old_matrix, i, j): # Decrease the matrix in order to count coefficient
-    new_matrix = old_matrix
+def decrease_matrix(old_matrix, i, j):  # Decrease the matrix in order to count coefficient
+    new_matrix = deepcopy(old_matrix)
     for a in range(0, len(old_matrix)):
         del new_matrix[a][int(j)]
     del new_matrix[int(i)]
@@ -93,7 +82,4 @@ while not got_answer:
     user_option = option()
     user_matrix, n, m = get_matrix()
     if user_option == 1:
-        ans, got_answer, msg = det(user_matrix, n, m)
-        if not msg:
-            print("Answer:", ans)
-        print(msg)
+        print("Answer:", det(user_matrix, n, m))
