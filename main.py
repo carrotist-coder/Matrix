@@ -56,12 +56,11 @@ def det(matrix, n, m):  # Count determinant
     else:
         ans = 0
         const_matrix = deepcopy(matrix)
-        for i in range(0, n):
-            for j in range(0, m):
-                element = int(const_matrix[int(i)][int(j)])
-                matrix = deepcopy(const_matrix)
-                coefficient = det_coefficient(matrix, n, m, int(i)+1, int(j) + 1)
-                ans += element * int(coefficient)
+        for j in range(0, m):
+            element = int(const_matrix[int(0)][int(j)])
+            matrix = deepcopy(const_matrix)
+            coefficient = det_coefficient(matrix, n, m, int(0)+1, int(j) + 1)
+            ans += element * int(coefficient) * (-1)**j
         return ans
 
 
@@ -82,4 +81,7 @@ while not got_answer:
     user_option = option()
     user_matrix, n, m = get_matrix()
     if user_option == 1:
+        ans = det(user_matrix, n, m)
+        if ans is not None:
+            got_answer = True
         print("Answer:", det(user_matrix, n, m))
