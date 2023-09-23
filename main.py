@@ -46,21 +46,54 @@ def get_matrix():
     return matrix, n, m
 
 
-def det(matrix, n, m):
+def det(matrix, n, m):  # Count determinant
+    # const_matrix = matrix
     msg = str()
+    ans = None
     if n != m:
         msg = "The determinant of the matrix can be found only in a square matrix."
     else:
-        pass
-    return None, n == m, msg
+        if len(matrix)==1:
+            return int(matrix[0][0]), n == m, msg
+        else:
+            for i in range(0,n):
+                ans = 0
+            # for i in range(0,n+1):
+            #     coefficient, no_answer, no_msg = det_coefficient(matrix, n,m, 1, int(i)+1)
+            #     print(coefficient)
+            #     # ans += int(matrix[0][int(i)]) * int(coefficient)
+            #     ans += int(coefficient)
+                coefficient, no_answer, no_msg = det_coefficient(matrix, n, m, 1, int(0) + 1)
+                print(coefficient)
+                #ans += int(matrix[0][int(i)]) * int(coefficient)
+        return ans, n == m, msg
+
+
+def det_coefficient(matrix_accepted, n, m, i, j): # Count coefficient
+    #if len(matrix)==1:
+    #    return matrix[0][0], 1, 1
+    #else:
+    #    return det(decrease_matrix(matrix, i-1, j-1), i, j)
+    if len(matrix_accepted) == 1:
+        return det(matrix_accepted, i, j)
+    else:
+        return det(decrease_matrix(matrix_accepted, i - 1, j - 1), n-1, m-1)
+
+
+def decrease_matrix(old_matrix, i, j): # Decrease the matrix in order to count coefficient
+    new_matrix = old_matrix
+    for a in range(0, len(old_matrix)):
+        del new_matrix[a][int(j)]
+    del new_matrix[int(i)]
+    return new_matrix
 
 
 got_answer = False
 while not got_answer:
     user_option = option()
-    matrix, n, m = get_matrix()
+    user_matrix, n, m = get_matrix()
     if user_option == 1:
-        ans, got_answer, msg = det(matrix, n, m)
+        ans, got_answer, msg = det(user_matrix, n, m)
         if not msg:
-            print(ans)
+            print("Answer:", ans)
         print(msg)
