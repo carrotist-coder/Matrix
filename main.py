@@ -2,25 +2,25 @@ from copy import deepcopy
 
 MIN_NUMBER = -2147483648
 MAX_NUMBER = 2147483647
-options = [
-    "1. Find the determinant of the matrix\n"
-]
+options = {
+    1: "Find the determinant of the matrix\n"
+}
 
 
 def get_input(msg, quantity, interval):
     # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
-    condition = False
-    while not condition:
+    good_ans_condition = False
+    while not good_ans_condition:
         ans = list(input(msg).split())
-        condition = (len(ans) == quantity or quantity == -1)  # -1 means unlimited quantity of the parameters
+        good_ans_condition = (len(ans) == quantity or quantity == -1)  # -1 means unlimited quantity of the parameters
         try:
             for element in ans:
                 if not (int(element) in interval):
-                    condition = False
+                    good_ans_condition = False
                     break
         except:
-            condition = False
-        if condition:
+            good_ans_condition = False
+        if good_ans_condition:
             if quantity == 1:
                 ans = int(ans[0])
             return ans
@@ -39,13 +39,13 @@ def init_matrix(lines):  # Initialization the matrix from the keyboard
     return matrix, lines, columns
 
 
-def option():  # Print all the options and get user's response
+def get_option():  # Print all the options and get user's response
     print("Options: \n", options)
     return get_input("Enter: ", 1, range(1, len(options) + 1))
 
 
-def get_matrix(): # Find out the number of lines in the matrix n*m.
-    matrix, n, m = init_matrix(get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 99)))
+def get_matrix():  # Find out the number of lines in the matrix n*m.
+    matrix, n, m = init_matrix(get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 100)))
     return matrix, n, m
 
 
@@ -59,10 +59,9 @@ def det(matrix, n, m):  # Count determinant
         ans = 0
         const_matrix = deepcopy(matrix)
         for j in range(0, m):
-            element = int(const_matrix[int(0)][int(j)])
-            matrix = deepcopy(const_matrix)
-            coefficient = det_coefficient(matrix, n, m, int(0) + 1, int(j) + 1)
-            ans += element * int(coefficient) * (-1) ** j
+            element = int(const_matrix[0][int(j)])
+            coefficient = det_coefficient(matrix, n, m, 1, int(j) + 1)
+            ans += element * int(coefficient) * (-1) ** (j % 2)
         return ans
 
 
@@ -80,7 +79,7 @@ def decrease_matrix(old_matrix, i, j):  # Decrease the matrix an order of magnit
 
 got_answer = False
 while not got_answer:
-    user_option = option()
+    user_option = get_option()
     user_matrix, n, m = get_matrix()
     if user_option == 1:
         ans = det(user_matrix, n, m)
