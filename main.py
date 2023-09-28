@@ -41,7 +41,7 @@ class Matrix:
         self.m = int()
         # TODO: Minor: get_height/get_weight
 
-    def init_matrix(self, lines):  # Initialization the matrix from the keyboard
+    def init_matrix(self, lines):  # Method: Initialization the matrix from the keyboard
         matrix = []
         columns = -1
         for i in range(lines):
@@ -49,11 +49,12 @@ class Matrix:
             if i == 0:
                 columns = len(line)
             matrix.append(line)
-        return matrix, lines, columns
+        self.matrix = matrix
+        self.n = lines
+        self.m = columns
 
     def get_matrix(self):  # Method: Find out the number of lines in the matrix n*m.
-        self.matrix, self.n, self.m = self.init_matrix(
-            get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 100)))
+        self.init_matrix(get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 100)))
 
     def det(self, matrix, n, m):  # Count determinant
         if n == 1:
