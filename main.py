@@ -25,7 +25,7 @@ def get_input(msg, quantity, interval):
                 ans = int(ans[0])
             return ans
         else:
-            print("Something went wrong...")
+            print("Something went wrong...")  # TODO: More detailed exceptions messages
 
 
 def get_option():  # Print all the options and get user's response
@@ -36,33 +36,32 @@ def get_option():  # Print all the options and get user's response
 class Matrix:
     def __init__(self):
         # Create the Matrix size n*m:
-        self.matrix, self.n, self.m = self.get_matrix()
+        self.matrix = []
+        self.n = int()
+        self.m = int()
+        # TODO: Minor: get_height/get_weight
 
     def init_matrix(self, lines):  # Initialization the matrix from the keyboard
         matrix = []
         columns = -1
-        for i in range(1, lines + 1):
-            line = get_input("Line " + str(i) + ": ", columns, range(MIN_NUMBER, MAX_NUMBER + 1))
-            if i == 1:
+        for i in range(lines):
+            line = get_input("Line " + str(i + 1) + ": ", columns, range(MIN_NUMBER, MAX_NUMBER + 1))
+            if i == 0:
                 columns = len(line)
             matrix.append(line)
         return matrix, lines, columns
 
-    def get_matrix(self):  # Find out the number of lines in the matrix n*m.
-        self.matrix, n, m = self.init_matrix(
+    def get_matrix(self):  # Method: Find out the number of lines in the matrix n*m.
+        self.matrix, self.n, self.m = self.init_matrix(
             get_input("Enter the number of lines of the matrix n (1-99): ", 1, range(1, 100)))
-        return self.matrix, n, m
 
     def det(self, matrix, n, m):  # Count determinant
-        if n != m:
-            print("The determinant of the matrix can be found only in a square matrix.")
-            return None
-        elif n == 1:
+        if n == 1:
             return int(matrix[0][0])
         else:
             ans = 0
             const_matrix = deepcopy(matrix)
-            for j in range(0, m):
+            for j in range(m):
                 element = int(const_matrix[0][int(j)])
                 coefficient = self.det_coefficient(matrix, n, m, 1, int(j) + 1)
                 ans += element * int(coefficient) * (-1) ** (j % 2)
@@ -80,12 +79,16 @@ class Matrix:
         return new_matrix
 
 
+# TODO: float()
 got_answer = False
 while not got_answer:
     user_option = get_option()
     user_matrix = Matrix()
+    user_matrix.get_matrix()
     if user_option == 1:
-        ans = user_matrix.det(user_matrix.matrix, user_matrix.n, user_matrix.m)
-        if ans is not None:
+        if user_matrix.n != user_matrix.m:
+            print("The determinant of the matrix can be found only in a square matrix.")
+        else:
+            ans = user_matrix.det(user_matrix.matrix, user_matrix.n, user_matrix.m)
             got_answer = True
-        print("Answer:", user_matrix.det(user_matrix.matrix, user_matrix.n, user_matrix.m))
+            print("Answer:", ans)
