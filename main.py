@@ -3,9 +3,10 @@ from copy import deepcopy
 MIN_NUMBER = -2147483648
 MAX_NUMBER = 2147483647
 options = {
-    1: "Find the determinant of the matrix\n"
+    1: "Find the determinant of the matrix"
 }
 GET_DETERMINANT = 1
+
 
 def get_input(msg, quantity, interval):
     # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
@@ -29,7 +30,10 @@ def get_input(msg, quantity, interval):
 
 
 def get_option():  # Print all the options and get user's response
-    print("Options: \n", options)
+    print("Options: ")
+    for i in range(len(options)):
+        print(str(i + 1) + ': ' + options[i + 1] + ';')
+    print()
     return get_input("Enter: ", 1, range(1, len(options) + 1))
 
 
