@@ -9,18 +9,18 @@ options = {
 
 def get_input(msg, quantity, interval):
     # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
-    good_ans_condition = False
-    while not good_ans_condition:
+    is_good_ans = False
+    while not is_good_ans:
         ans = list(input(msg).split())
-        good_ans_condition = (len(ans) == quantity or quantity == -1)  # -1 means unlimited quantity of the parameters
+        is_good_ans = (len(ans) == quantity or quantity == -1)  # -1 means unlimited quantity of the parameters
         try:
             for element in ans:
                 if not (int(element) in interval):
-                    good_ans_condition = False
+                    is_good_ans = False
                     break
         except:
-            good_ans_condition = False
-        if good_ans_condition:
+            is_good_ans = False
+        if is_good_ans:
             if quantity == 1:
                 ans = int(ans[0])
             return ans
