@@ -83,7 +83,7 @@ class Matrix:
         return new_matrix
 
     def transpose(self, old_matrix, n, m):
-        # new_matrix = deepcopy(old_matrix)
+        # Return transposed matrix
         new_matrix = []
         for i in range(m):
             line = []
