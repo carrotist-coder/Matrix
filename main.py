@@ -5,7 +5,7 @@ MAX_NUMBER = 2147483647
 options = {
     1: "Find the determinant of the matrix\n"
 }
-
+GET_DETERMINANT = 1
 
 def get_input(msg, quantity, interval):
     # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
@@ -86,7 +86,7 @@ while not got_answer:
     user_option = get_option()
     user_matrix = Matrix()
     user_matrix.get_matrix()
-    if user_option == 1:
+    if user_option == GET_DETERMINANT:
         if user_matrix.n != user_matrix.m:
             print("The determinant of the matrix can be found only in a square matrix.")
         else:
