@@ -3,7 +3,8 @@ from copy import deepcopy
 MIN_NUMBER = -2147483648
 MAX_NUMBER = 2147483647
 options = {
-    1: "Find the determinant of the matrix\n"
+    1: "Find the determinant of the matrix\n",
+    2: "Transpose matrix\n"
 }
 GET_DETERMINANT = 1
 GET_TRANSPOSED_MATRIX = 2
@@ -81,12 +82,20 @@ class Matrix:
         del new_matrix[int(i)]
         return new_matrix
 
-    def transpose(self, matrix, n, m):
-        pass
+    def transpose(self, old_matrix, n, m):
+        # new_matrix = deepcopy(old_matrix)
+        new_matrix = []
+        for i in range(m):
+            line = []
+            for j in range(n):
+                line.append(old_matrix[j][i])
+            new_matrix.append(line)
+        return new_matrix
 
 
 # TODO: float()
 got_answer = False
+ans = None
 while not got_answer:
     user_option = get_option()
     user_matrix = Matrix()
@@ -97,6 +106,7 @@ while not got_answer:
         else:
             ans = user_matrix.det(user_matrix.matrix, user_matrix.n, user_matrix.m)
             got_answer = True
-            print("Answer:", ans)
     elif user_option == GET_TRANSPOSED_MATRIX:
-        pass
+        ans = user_matrix.transpose(user_matrix.matrix, user_matrix.n, user_matrix.m)
+        got_answer = True
+print("Answer:", ans)
