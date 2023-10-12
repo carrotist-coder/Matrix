@@ -6,6 +6,8 @@ options = {
     1: "Find the determinant of the matrix\n"
 }
 GET_DETERMINANT = 1
+GET_TRANSPOSED_MATRIX = 2
+
 
 def get_input(msg, quantity, interval):
     # Get input from user: msg - message to show, quantity of the accepted parameters that are included in the interval
@@ -79,6 +81,9 @@ class Matrix:
         del new_matrix[int(i)]
         return new_matrix
 
+    def transpose(self, matrix, n, m):
+        pass
+
 
 # TODO: float()
 got_answer = False
@@ -93,3 +98,5 @@ while not got_answer:
             ans = user_matrix.det(user_matrix.matrix, user_matrix.n, user_matrix.m)
             got_answer = True
             print("Answer:", ans)
+    elif user_option == GET_TRANSPOSED_MATRIX:
+        pass
